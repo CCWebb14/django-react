@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
-
+import "./styles.css";
 
 class App extends Component {
     constructor(props) {
@@ -34,7 +34,7 @@ class App extends Component {
 
     render() {
         return (
-            <ul>
+            <ul className="redText">
                 {this.state.data.map(contact => {
                     return (
                         <li key={contact.id}>
