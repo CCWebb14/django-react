@@ -1,26 +1,19 @@
 from collections import UserList
-from django.shortcuts import render
 from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
 from .serializers import UserSerializer
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
+from rest_framework import generics
+from django.dispatch import receiver
+from django.conf import settings
+from django.db.models.signals import post_save
 
-from account_manage import serializers
 
-class UserCreate(APIView):
-    # Creates the User
+class UserCreate(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
-    def post(self, request, format='json'):
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.save()
-            if user:
-                token = Token.objects.create(user=user)
-                json = serializer.data
-                json['token'] = token.key
-                return Response(json, status=status.HTTP_201_CREATED)
-
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
