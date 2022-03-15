@@ -34,15 +34,17 @@ class App extends Component {
 
     render() {
         return (
-            <ul className="redText">
-                {this.state.data.map(contact => {
-                    return (
-                        <li key={contact.id}>
-                            {contact.name} - {contact.email} 
-                        </li>
-                    );
-                })}
-            </ul>
+            <div className="container">
+                <ul className="centerText">
+                    {this.state.data.map(contact => {
+                        return (
+                            <li key={contact.id}>
+                                {contact.name} - {contact.email} 
+                            </li>
+                        );
+                    })}
+                </ul>
+            </div>
         );
     }
 }

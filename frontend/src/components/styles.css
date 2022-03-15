@@ -1,3 +1,19 @@
-.redText {
-    color: red;
+html {
+    background-color: #1F2937;
+    background-size: cover;
+}
+  
+body,html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.centerText {
+    color: white;
 }
